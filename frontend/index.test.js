@@ -1,15 +1,21 @@
 import { autotest } from "@tim-code/autotest"
-import { make } from "./index.js"
+import * as command from "./index.js"
+
+// base corresponds to filename in test-server
+const base = "serve"
+const filename = `file:///${base}.js`
 
 const setup = () => {
   window.SILENT = true
 }
 // test server's port is randomly assigned and then browser-util finds out the port through process.env.PORT
-autotest(make, { setup })("file:///serve.js", "root", { arg: "world" })("hello world")
+autotest(command.post, { setup })(filename, "root", { arg: "world" })("hello world")
+autotest(command.get, { setup })(filename, "root", { arg: "world" })("hello world")
+autotest(command.factory(filename), { setup })("root", { arg: "world" })("hello world")
 
 const setupCookie = () => {
-  document.cookie = "SERVE_BACKEND=http://localhost:4000; path=/;"
+  document.cookie = `${base}=http://localhost:0; path=/;`
 }
-autotest(make, { setup: setupCookie, error: true })("file:///serve.js", "root", {
+autotest(command.post, { setup: setupCookie, error: true })(filename, "root", {
   arg: "world",
 })(expect.objectContaining({ message: expect.stringMatching(/ECONNREFUSED/u) }))

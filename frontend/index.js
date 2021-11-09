@@ -8,16 +8,36 @@ export function log(data) {
   return data
 }
 
-export async function make(importMetaUrl, commandName, postData) {
+export function url(importMetaUrl) {
   const filename = importMetaUrl.split("/").pop()
   const base = filename.split(".").shift()
-  const cookieName = `${base.toUpperCase()}_BACKEND`
-  const origin = cookie.get(cookieName) || ""
-  const { result } = await json.post(`${origin}/${base}/${commandName}`, postData)
-  return log(result)
+  const origin = cookie.get(base) || ""
+  return `${origin}/${base}`
 }
 
-export function factory(importMetaUrl, { defaults = {}, overrides = {} } = {}) {
-  return (commandName, postData) =>
-    make(importMetaUrl, commandName, { ...defaults, ...postData, ...overrides })
+export function factory(
+  importMetaUrl,
+  { method = "post", defaults = {}, overrides = {} } = {}
+) {
+  return async (commandName, requestData = {}) => {
+    const fullUrl = `${url(importMetaUrl)}/${commandName}`
+    const { result } = await json[method](fullUrl, {
+      ...defaults,
+      ...requestData,
+      ...overrides,
+    })
+    return log(result)
+  }
+}
+
+export function post(importMetaUrl, commandName, body) {
+  return factory(importMetaUrl, { method: "post" })(commandName, body)
+}
+
+export function get(importMetaUrl, commandName, query) {
+  return factory(importMetaUrl, { method: "get" })(commandName, query)
+}
+
+export function request(importMetaUrl, commandName, options) {
+  return factory(importMetaUrl, { method: "request" })(commandName, options)
 }
