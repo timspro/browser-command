@@ -8,16 +8,16 @@ export function log(data) {
   return data
 }
 
-export function make(name, importMetaUrl, { defaults = {}, forced = {} } = {}) {
+export function make(commandName, importMetaUrl, { defaults = {}, overrides = {} } = {}) {
   const filename = importMetaUrl.split("/").pop()
   const base = filename.split(".").shift()
   return async (postData) => {
     const cookieName = `${base.toUpperCase()}_BACKEND`
     const origin = cookie.get(cookieName) || ""
-    const { result } = await json.post(`${origin}/${base}/${name}`, {
+    const { result } = await json.post(`${origin}/${base}/${commandName}`, {
       ...defaults,
       ...postData,
-      ...forced,
+      ...overrides,
     })
     return log(result)
   }
