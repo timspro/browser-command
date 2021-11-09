@@ -1,0 +1,29 @@
+{
+  "name": "@tim-code/browser-command",
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "main": "frontend/index.js",
+  "author": "",
+  "license": "MIT",
+  "scripts": {
+    "test": "CODE_DIR=. ROUTES_DIR=test-server node --no-warnings --experimental-vm-modules node_modules/.bin/jest"
+  },
+  "devDependencies": {
+    "@tim-code/autotest": "^0.9.0",
+    "@tim-code/eslint-config": "^0.5.6",
+    "@tim-code/jest-config-server": "^0.1.1",
+    "browser-env": "^3.3.0",
+    "jest": "^27.3.1",
+    "node-fetch": "^3.0.0"
+  },
+  "eslintConfig": {
+    "extends": "@tim-code"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@tim-code/browser-util": "^0.2.2"
+  }
+}
