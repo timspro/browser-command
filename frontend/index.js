@@ -1,7 +1,18 @@
 import { cookie, json } from "@tim-code/browser-util"
 
+function shorten(string, max = 100) {
+  if (string.length > max) {
+    const shortened = string.substring(0, max)
+    return `${shortened}...`
+  }
+  return string
+}
+
 export function log(data) {
-  if (!window.SILENT) {
+  if (!window.SILENT && data !== undefined) {
+    if (typeof data === "string") {
+      data = shorten(data)
+    }
     // eslint-disable-next-line no-console
     console.log(data)
   }
