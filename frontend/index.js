@@ -12,7 +12,8 @@ export function make(name, importMetaUrl, { defaults = {}, forced = {} } = {}) {
   const filename = importMetaUrl.split("/").pop()
   const base = filename.split(".").shift()
   return async (postData) => {
-    const origin = cookie.get(`${base.toUpperCase()}_BACKEND`) || ""
+    const cookieName = `${base.toUpperCase()}_BACKEND`
+    const origin = cookie.get(cookieName) || ""
     const { result } = await json.post(`${origin}/${base}/${name}`, {
       ...defaults,
       ...postData,
