@@ -9,7 +9,7 @@ function shorten(string, max = 100) {
 }
 
 export function log(data) {
-  if (!window.SILENT && data !== undefined) {
+  if (!window.SILENT) {
     if (typeof data === "string") {
       data = shorten(data)
     }
