@@ -8,8 +8,8 @@ function shorten(string, max = 100) {
   return string
 }
 
-export function log(data) {
-  if (!window.SILENT) {
+export function log(data, { silent = false } = {}) {
+  if (!silent && !window.SILENT) {
     if (typeof data === "string") {
       data = shorten(data)
     }
@@ -30,14 +30,14 @@ export function factory(
   importMetaUrl,
   { method = "post", defaults = {}, overrides = {} } = {}
 ) {
-  return async (commandName, requestData = {}) => {
+  return async (commandName, requestData = {}, { silent = false } = {}) => {
     const fullUrl = `${url(importMetaUrl)}/${commandName}`
     const { result } = await json[method](fullUrl, {
       ...defaults,
       ...requestData,
       ...overrides,
     })
-    return log(result)
+    return log(result, { silent })
   }
 }
 
