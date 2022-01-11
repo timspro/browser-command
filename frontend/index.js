@@ -1,17 +1,17 @@
 import { cookie, json } from "@tim-code/browser-util"
 
-function shorten(string, max = 100) {
-  if (string.length > max) {
-    const shortened = string.substring(0, max)
+function shorten(string, maxLength) {
+  if (string.length > maxLength) {
+    const shortened = string.substring(0, maxLength)
     return `${shortened}...`
   }
   return string
 }
 
-export function log(data, { silent = false } = {}) {
+export function log(data, { maxLength, silent = false } = {}) {
   if (!silent && !window.SILENT) {
-    if (typeof data === "string") {
-      data = shorten(data)
+    if (typeof data === "string" && maxLength) {
+      data = shorten(data, maxLength)
     }
     // eslint-disable-next-line no-console
     console.log(data)
@@ -30,14 +30,14 @@ export function factory(
   importMetaUrl,
   { method = "post", defaults = {}, overrides = {} } = {}
 ) {
-  return async (commandName, requestData = {}, { silent = false } = {}) => {
+  return async (commandName, requestData = {}, { silent = false, maxLength = false } = {}) => {
     const fullUrl = `${url(importMetaUrl)}/${commandName}`
     const { result } = await json[method](fullUrl, {
       ...defaults,
       ...requestData,
       ...overrides,
     })
-    return log(result, { silent })
+    return log(result, { silent, maxLength })
   }
 }
 
