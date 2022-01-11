@@ -1,6 +1,6 @@
 {
   "name": "@tim-code/browser-command",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "",
   "type": "module",
   "main": "frontend/index.js",
@@ -11,10 +11,10 @@
   },
   "devDependencies": {
     "@tim-code/autotest": "^0.10.3",
-    "@tim-code/eslint-config": "^0.5.14",
-    "@tim-code/jest-config-server": "^0.2.0",
+    "@tim-code/eslint-config": "^0.6.1",
+    "@tim-code/jest-config-server": "^0.2.2",
     "browser-env": "^3.3.0",
-    "jest": "^27.4.4",
+    "jest": "^27.4.7",
     "node-fetch": "^3.1.0"
   },
   "eslintConfig": {
@@ -24,6 +24,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@tim-code/browser-util": "^0.2.2"
+    "@tim-code/browser-util": "^0.2.4"
   }
 }
