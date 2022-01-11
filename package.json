@@ -1,6 +1,6 @@
 {
   "name": "@tim-code/browser-command",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "",
   "type": "module",
   "main": "frontend/index.js",
@@ -24,6 +24,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@tim-code/browser-util": "^0.2.4"
+    "@tim-code/browser-util": "^0.2.5"
   }
 }
