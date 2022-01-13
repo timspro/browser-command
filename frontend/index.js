@@ -28,15 +28,16 @@ export function url(importMetaUrl) {
 
 export function factory(
   importMetaUrl,
-  { method = "post", defaults = {}, overrides = {} } = {}
+  { method = "post", unbox = "result", defaults = {}, overrides = {} } = {}
 ) {
   return async (commandName, requestData = {}, { silent = false, maxLength = false } = {}) => {
     const fullUrl = `${url(importMetaUrl)}/${commandName}`
-    const { result } = await json[method](fullUrl, {
+    const boxed = await json[method](fullUrl, {
       ...defaults,
       ...requestData,
       ...overrides,
     })
+    const result = typeof unbox === "string" ? boxed[unbox] : boxed
     return log(result, { silent, maxLength })
   }
 }
