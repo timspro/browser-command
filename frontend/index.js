@@ -22,7 +22,7 @@ export function log(data, { maxLength, silent = false } = {}) {
 export function url(importMetaUrl) {
   const filename = importMetaUrl.split("/").pop()
   const base = filename.split(".").shift()
-  const origin = cookie.get(base) || ""
+  const origin = cookie.get(base) || location.origin
   return `${origin}/${base}`
 }
 
