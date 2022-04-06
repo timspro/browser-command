@@ -41,15 +41,3 @@ export function factory(
     return log(result, { silent, maxLength })
   }
 }
-
-export function post(importMetaUrl, commandName, body) {
-  return factory(importMetaUrl, { method: "post" })(commandName, body)
-}
-
-export function get(importMetaUrl, commandName, query) {
-  return factory(importMetaUrl, { method: "get" })(commandName, query)
-}
-
-export function request(importMetaUrl, commandName, options) {
-  return factory(importMetaUrl, { method: "request" })(commandName, options)
-}
