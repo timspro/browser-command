@@ -1,6 +1,6 @@
 {
   "name": "@tim-code/browser-command",
-  "version": "0.4.2",
+  "version": "0.5.3",
   "description": "",
   "type": "module",
   "main": "frontend/index.js",
