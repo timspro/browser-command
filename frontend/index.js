@@ -26,7 +26,7 @@ export function url(importMetaUrl) {
   return `${origin}/${base}`
 }
 
-export function getUrl(importMetaUrl, commandName) {
+export function getFullUrl(importMetaUrl, commandName) {
   return `${url(importMetaUrl)}/${commandName}`
 }
 
@@ -34,12 +34,13 @@ export function factory(
   importMetaUrl,
   { method = "post", unbox = "result", defaults = {} } = {}
 ) {
-  return async (commandName, requestData = {}, { silent = false, maxLength = false } = {}) => {
-    const fullUrl = getUrl(importMetaUrl, commandName)
-    const boxed = await json[method](fullUrl, {
-      ...defaults,
-      ...requestData,
-    })
+  return async (
+    commandName,
+    requestData = {},
+    { fetchOptions = {}, silent = false, maxLength = false } = {}
+  ) => {
+    const fullUrl = getFullUrl(importMetaUrl, commandName)
+    const boxed = await json[method](fullUrl, { ...defaults, ...requestData }, fetchOptions)
     const result = typeof unbox === "string" ? boxed[unbox] : boxed
     return log(result, { silent, maxLength })
   }
